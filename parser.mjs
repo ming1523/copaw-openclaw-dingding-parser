@@ -16,10 +16,49 @@ export function extractRichText(content = {}) {
   return out.join(" ").trim();
 }
 
+function deepFindQuoteString(obj, depth = 0) {
+  if (!obj || depth > 4) return "";
+  if (typeof obj === "string") return "";
+  if (Array.isArray(obj)) {
+    for (const item of obj) {
+      const hit = deepFindQuoteString(item, depth + 1);
+      if (hit) return hit;
+    }
+    return "";
+  }
+  const keys = Object.keys(obj || {});
+  for (const k of keys) {
+    const lk = k.toLowerCase();
+    if (lk.includes("quote") || lk.includes("reply")) {
+      const v = obj[k];
+      if (typeof v === "string" && v.trim()) return v.trim();
+      if (v && typeof v === "object") {
+        if (typeof v.text === "string" && v.text.trim()) return v.text.trim();
+        if (Array.isArray(v.richText)) {
+          const rt = v.richText
+            .map((n) => n?.content || n?.text || "")
+            .filter(Boolean)
+            .join(" ")
+            .trim();
+          if (rt) return rt;
+        }
+      }
+    }
+  }
+  // fallback depth-search any nested quote/reply key
+  for (const k of keys) {
+    const hit = deepFindQuoteString(obj[k], depth + 1);
+    if (hit) return hit;
+  }
+  return "";
+}
+
 export function extractQuoteText(data = {}) {
+  // common v1
   const qc = String(data?.content?.quoteContent || "").trim();
   if (qc) return qc;
 
+  // common v2
   const replied = data?.text?.repliedMsg?.content || {};
   if (Array.isArray(replied?.richText)) {
     const out = replied.richText
@@ -29,7 +68,14 @@ export function extractQuoteText(data = {}) {
       .trim();
     if (out) return out;
   }
-  return String(replied?.text || "").trim();
+  const rt = String(replied?.text || "").trim();
+  if (rt) return rt;
+
+  // rich-text / card / unknown payload fallback
+  const deep = deepFindQuoteString(data?.content || data);
+  if (deep) return deep;
+
+  return "";
 }
 
 function extractChatRecordText(content = {}) {
