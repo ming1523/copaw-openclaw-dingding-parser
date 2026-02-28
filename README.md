@@ -1,6 +1,16 @@
 # dingtalk-message-normalizer
 
-从钉钉（DingTalk）Stream 事件中提取并归一化可读文本的工具模块。兼容多种消息格式，输出统一的文本结构。
+> Keywords: **dingding openclaw**, **dingtalk openclaw**, **钉钉 openclaw**, **OpenClaw DingTalk parser**, **DingTalk message parser for OpenClaw**
+
+从钉钉（DingTalk / DingDing）Stream 事件中提取并归一化可读文本的工具模块。兼容多种消息格式，输出统一的文本结构。
+
+## OpenClaw + DingTalk（DingDing）
+
+如果你在找以下内容，这个仓库就是对应实现：
+
+- DingTalk / DingDing message parser for OpenClaw
+- 钉钉 openclaw 消息解析
+- dingtalk openclaw richText / quote / chatRecord 解析
 
 ## 为什么做这个（背景）
 
