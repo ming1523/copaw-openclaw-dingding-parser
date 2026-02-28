@@ -77,7 +77,7 @@ Date:   Sat Feb 28 23:48:00 2026 +0800
 ### 2. 关联远程并推送
 
 ```bash
-cd /Users/ming/.openclaw/workspace/code/dingtalk-message-normalizer
+cd dingtalk-message-normalizer
 
 # 替换为你的 GitHub 用户名
 git remote add origin git@github.com:YOUR_USERNAME/dingtalk-message-normalizer.git
