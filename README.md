@@ -41,6 +41,13 @@
 
 目标是把“消息解析”单独沉淀为可复用组件，避免与网关/发送逻辑耦合。
 
+## 致谢（Inspired by）
+
+- `agentscope-ai/CoPaw`：提供了 CoPaw 侧钉钉接入与桥接方向启发
+- `soimy/openclaw-channel-dingtalk`：非常好用的 OpenClaw 钉钉通道实现，很多字段兼容思路都受其启发
+
+感谢两位作者/团队的开源工作 🙌
+
 ## 支持的消息类型
 
 | 类型 | 说明 | 示例场景 |
